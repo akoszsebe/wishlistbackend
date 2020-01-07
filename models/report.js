@@ -21,6 +21,7 @@ exports.delete = (param, callback, errCallback) => {
 
     let deleteTodoSQL = 'DELETE FROM reports WHERE id = $1 RETURNING *';
     
+    console.log(param.id)
     console.log(deleteTodoSQL)
 
     param.pool.query(deleteTodoSQL, [param.id ],
