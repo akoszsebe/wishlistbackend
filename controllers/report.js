@@ -64,7 +64,7 @@ exports.getReportById = (req, res, pool) => {
 
     report.getReportsByID({ pool, ...req.body },
         (reoprts) => {
-            res.send({ "report": reoprts });
+            res.send(reoprts);
         },
         () => {
             res.status(400).send(constants.error.msg_error_occured);
@@ -98,7 +98,7 @@ exports.gets = (req, res, pool) => {
 
     report.gets({ pool, ...req.body },
         (reports) => {
-            res.send({ "reports": reports });
+            res.send(reports);
         },
         () => {
             res.status(400).send(constants.error.msg_error_occured);
