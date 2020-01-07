@@ -1,0 +1,16 @@
+
+params  : id 
+returns reports filtered be report id 
+/api/reports/get/id
+
+params  : user_id 
+returns reports filtered be user id 
+/api/reports/get/user
+
+params  : topic_id
+returns reports filtered be topic id 
+/api/reports/get/topic
+
+params  : user_id 
+returns reports filtered be user favorite 
+/api/reports/get/favorite

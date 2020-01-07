@@ -1,0 +1,139 @@
+{  
+    "gcm_api_key" :"AIzaSyAF94uTVLcxZRfMNGBIcjxGUCdw2gat_lw",
+ 
+    "error" : {  
+ 
+       "msg_invalid_param" 	: {  
+ 
+          "code" 	: 400,
+          "message"	: "Invalid request parameters."
+ 
+       },
+ 
+       "msg_empty_param" 	: {
+ 
+           "code"	:400,
+           "message"	:"Parameters should not be empty."
+ 
+       },
+ 
+       "msg_reg_failure" 	: {
+ 
+           "code"	:400,
+           "message"	:"Registration failure."
+ 
+       },
+ 
+       "msg_reg_exists" 	: {
+ 
+           "code"	:400,
+           "message"	:"Device already registered."
+ 
+       },
+ 
+       "msg_del_failure" : {
+ 
+          "code" : 400,
+          "message" : "Unable to remove device"
+ 
+       },
+ 
+       "msg_send_failure" : {
+ 
+          "code" : 400,
+          "message" : "Unable to send message"
+ 
+       },
+ 
+       "msg_error_occured" : {
+ 
+          "code" : 400,
+          "message" : "Some error occurred"
+ 
+       },
+
+       "msg_error_invalid_credetials" : {
+ 
+        "code" : 401,
+        "message" : "Invalid user name or password"
+     },
+
+     "msg_error_user_duplicate" : {
+ 
+        "code" : 400,
+        "message" : "User already exists in database."
+     },
+
+     "msg_error_duplicate" : {
+ 
+        "code" : 400,
+        "message" : "Record already exists in database."
+     },
+
+     "msg_error_device_create" : {
+ 
+        "code" : 400,
+        "message" : "Some error occurred during registration of the new device."
+     }
+ 
+    },
+ 
+    "success" : {
+ 
+          "msg_reg_success"	: {
+ 
+              "code"	: 200,
+              "message"   : "Device successfully registered."
+ 
+          },
+
+          "msg_reg_topic"	: {
+ 
+            "code"	: 200,
+            "message"   : "Topic successfully created."
+
+        },
+
+        "msg_reg_report"	: {
+ 
+            "code"	: 200,
+            "message"   : "Report successfully created."
+
+        },
+
+          "msg_reg_user"	: {
+ 
+            "code"	: 200,
+            "message"   : "User successfully registered."
+
+        },
+
+        "msg_user_login"	: {
+ 
+            "code"	: 200,
+            "message"   : "User successfully logged in."
+
+        },
+ 
+         "msg_del_success"  : {
+ 
+          "code" :  200,
+          "message" : "Device successfully removed"
+ 
+         },
+ 
+         "msg_send_success"  : {
+ 
+          "code" :  200,
+          "message" : "Message successfully sent !"
+ 
+         },
+
+         "msg_subscribe"  : {
+ 
+            "code" :  200,
+            "message" : "Subscribe was successful."
+   
+           }
+    }
+ }

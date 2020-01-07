@@ -1,0 +1,25 @@
+{
+  "name": "pns",
+  "version": "1.0.0",
+  "description": "phus notification server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Demeter Botond",
+  "license": "ISC",
+  "dependencies": {
+    "apn": "^2.2.0",
+    "body-parser": "^1.15.0",
+    "cloudinary": "^1.11.0",
+    "express": "^4.13.4",
+    "express-fileupload": "^1.0.0-alpha.1",
+    "fcm-notification": "^1.1.0",
+    "morgan": "^1.7.0",
+    "node-gcm": "^0.14.0",
+    "pg": "^7.4.3"
+  },
+  "engines": {
+    "node": "8.11.1"
+  }
+}
