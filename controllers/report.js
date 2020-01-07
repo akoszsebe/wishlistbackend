@@ -7,52 +7,73 @@ exports.create = (req, res, pool) => {
     if (!req.body) {
         return res.status(400).send(constants.error.msg_empty_param.message);
     }
-        report.create(
-            { pool, ...req.body },
-            (reports) => {
-                // device.getDevicesByTopic(
-                //     { pool, topic_id: req.body.topic.id },
-                //     (tokens) => {
-                //         if (tokens.length != undefined && tokens.length > 0) {
-                //             notification.FCMSubscribe({ tokens: tokens, topic: "/topics/topic" + req.body.topic.id },
-                //                 () => {
-                //                     notification.FCMSendNotification(
-                //                         { title: req.body.topic.name, body: req.body.content.description, topic: "/topics/topic" + req.body.topic.id, reportId: '' + reports[0].id },
-                //                         (respons) => {
-                //                             notification.FCMunsubscribeFromTopic({ tokens: tokens, topic: "/topics/topic" + req.body.topic.id },
-                //                                 () => {
-                //                                     console.log("FCM message sent :", respons);
-                //                                 },
-                //                                 (unsuscribeError) => {
-                //                                     console.log("FCM unsubscribe error: ", unsuscribeError);
-                //                                 }
-                //                             );
-                //                         },
-                //                         (messageError) => {
-                //                             console.log("FCM send message error: ", messageError);
-                //                         }
-                //                     );
-                //                 },
-                //                 (subscribeError) => {
-                //                     console.log("FCM subscribe error: ", subscribeError);
-                //                 }
-                //             );
-                //         }
-                //     },
-                //     (err) => {
-                //         console.log("DB error occured: ", err);
-                //     }
-                // );
-                res.send(constants.success.msg_reg_report);
-            },
-            (err) => {
-                if (err.code == 23505) {
-                    res.status(401).send(constants.error.msg_error_duplicate);
-                } else {
-                    res.status(400).send(constants.error.msg_error_occured);
-                }
+    report.create(
+        { pool, ...req.body },
+        (reports) => {
+            // device.getDevicesByTopic(
+            //     { pool, topic_id: req.body.topic.id },
+            //     (tokens) => {
+            //         if (tokens.length != undefined && tokens.length > 0) {
+            //             notification.FCMSubscribe({ tokens: tokens, topic: "/topics/topic" + req.body.topic.id },
+            //                 () => {
+            //                     notification.FCMSendNotification(
+            //                         { title: req.body.topic.name, body: req.body.content.description, topic: "/topics/topic" + req.body.topic.id, reportId: '' + reports[0].id },
+            //                         (respons) => {
+            //                             notification.FCMunsubscribeFromTopic({ tokens: tokens, topic: "/topics/topic" + req.body.topic.id },
+            //                                 () => {
+            //                                     console.log("FCM message sent :", respons);
+            //                                 },
+            //                                 (unsuscribeError) => {
+            //                                     console.log("FCM unsubscribe error: ", unsuscribeError);
+            //                                 }
+            //                             );
+            //                         },
+            //                         (messageError) => {
+            //                             console.log("FCM send message error: ", messageError);
+            //                         }
+            //                     );
+            //                 },
+            //                 (subscribeError) => {
+            //                     console.log("FCM subscribe error: ", subscribeError);
+            //                 }
+            //             );
+            //         }
+            //     },
+            //     (err) => {
+            //         console.log("DB error occured: ", err);
+            //     }
+            // );
+            res.send(constants.success.msg_reg_report);
+        },
+        (err) => {
+            if (err.code == 23505) {
+                res.status(401).send(constants.error.msg_error_duplicate);
+            } else {
+                res.status(400).send(constants.error.msg_error_occured);
             }
-        );
+        }
+    );
+}
+
+exports.delete = (req, res, pool) => {
+
+    // Validate request
+    if (!req.body) {
+        return res.status(400).send(constants.error.msg_empty_param.message);
+    }
+    report.delete(
+        { pool, ...req.body },
+        (reports) => {
+            res.send(constants.success.msg_reg_report);
+        },
+        (err) => {
+            if (err.code == 23505) {
+                res.status(401).send(constants.error.msg_error_duplicate);
+            } else {
+                res.status(400).send(constants.error.msg_error_occured);
+            }
+        }
+    );
 }
 
 exports.getReportById = (req, res, pool) => {

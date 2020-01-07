@@ -17,6 +17,24 @@ exports.create = (param, callback, errCallback) => {
     );
 }
 
+exports.delete = (param, callback, errCallback) => {
+
+    let deleteTodoSQL = 'DELETE FROM reports WHERE id = $1 RETURNING *';
+    
+    console.log(deleteTodoSQL)
+
+    param.pool.query(deleteTodoSQL, [param.id ],
+        (err, data) => {
+            if (err) {
+                console.log(err)
+                errCallback(err);
+            } else {
+                console.log(data.rows)
+                callback(data.rows);
+            }
+        }
+    );
+}
 
 exports.get = (param, callback, errCallback) => {
     const getAllReportsByIdSQL = "SELECT * FROM reports WHERE id = ($1)";
