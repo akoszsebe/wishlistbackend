@@ -11,11 +11,10 @@
   "dependencies": {
     "apn": "^2.2.0",
     "body-parser": "^1.15.0",
-    "cloudinary": "^1.11.0",
     "express": "^4.13.4",
     "express-fileupload": "^1.0.0-alpha.1",
-    "fcm-notification": "^1.1.0",
-    "morgan": "^1.7.0",
+    "firebase-admin": "^5.0.0",
+    "morgan": "^1.9.1",
     "node-gcm": "^0.14.0",
     "pg": "^7.4.3"
   },

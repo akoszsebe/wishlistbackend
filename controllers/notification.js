@@ -1,49 +1,33 @@
-const fcm = require('fcm-notification');
-const FCM = new fcm('privatekey.json'); 
-let tokens =[];
+var admin = require("firebase-admin");
+var serviceAccount = require('../privatekey.json');
 
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://wishlist-8a95b.firebaseio.com"
+});
 
-exports.FCMSendNotification =  (param, callback, callbackError) => {
+exports.SendNotification = (registrationToken, param, callback, callbackError) => {
 
-    let message = {
-        data: { 
-          score: '850',
-          time: '2:45'
+    let payload = {
+        notification: {
+            title: param.title,
+            body: param.body
         },
-        notification:{
-          title : param.title,
-          body : param.body },
-        data:{
-            report_id: param.reportId
-        },
-        topic: param.topic
+    };
+    var options = {
+        priority: "normal",
+        timeToLive: 60 * 60
     };
 
-    FCM.send(message, function(err, respons) {
-        if(err){
-            callbackError(err);
-        }else { 
-            callback(respons);
-        }
-    })
+    admin.messaging().sendToDevice(registrationToken, payload, options)
+        .then(function (response) {
+            console.log("Successfully sent message:", response);
+            callback(response);
+        })
+        .catch(function (error) {
+            console.log("Error sending message:", error);
+            callbackError(error);
+        });
 }
 
-exports.FCMSubscribe =  (param , callback, callbackError) => { 
-    FCM.subscribeToTopic(param.tokens, param.topic, function(err) {
-        if(err){
-            callbackError(err);
-        }else {
-            callback();
-        }
-    })
-}
 
-exports.FCMunsubscribeFromTopic = (param, callback, callbackError) => {
-    FCM.unsubscribeFromTopic(param.tokens, param.topic, function(err) {
-        if(err){
-            callbackError(err);
-        }else {
-            callback();
-        }
-    })
-}

@@ -12,14 +12,27 @@ Db.prototype.create = function (callback) {
     const self = this
     self.createReportTable((success) => {
         console.log(success);
-        return callback(success);
+        if (success) {
+            self.createDeviceTable((success) => {
+                console.log(success);
+                return callback(success);
+            })
+        } else {
+            return callback(success);
+        }
     })
 }
 
 Db.prototype.drop = function (__callback) {
     const self = this;
     self.deleteTable(schemas.deleteReportsTableSQL, (success) => {
-        return __callback(success);
+        if (success) {
+            self.deleteTable(schemas.deleteDeviceTableSQL, (success) => {
+                return __callback(success);
+            });
+        } else {
+            return __callback(success);
+        }
     })
 }
 
@@ -37,6 +50,20 @@ Db.prototype.createReportTable = function (_callback) {
     console.log("itt reports")
     const self = this;
     self.pool.query(schemas.creatReportsSQL,
+        (err, data) => {
+            if (err) {
+                console.log('Error creating reports tables', err);
+                return _callback(err)
+            }
+            return _callback(true)
+        }
+    );
+}
+
+Db.prototype.createDeviceTable = function (_callback) {
+    console.log("itt device")
+    const self = this;
+    self.pool.query(schemas.createDevicesTableSQL,
         (err, data) => {
             if (err) {
                 console.log('Error creating reports tables', err);
