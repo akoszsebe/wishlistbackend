@@ -37,6 +37,26 @@ exports.delete = (param, callback, errCallback) => {
     );
 }
 
+exports.update = (param, callback, errCallback) => {
+
+    let updateTodoSQL = 'UPDATE reports SET title = $2, content = $3 WHERE id = $1 RETURNING *';
+    
+    console.log(param.id)
+    console.log(updateTodoSQL)
+
+    param.pool.query(updateTodoSQL, [param.id, param.title, param.content],
+        (err, data) => {
+            if (err) {
+                console.log(err)
+                errCallback(err);
+            } else {
+                console.log(data.rows)
+                callback(data.rows);
+            }
+        }
+    );
+}
+
 exports.get = (param, callback, errCallback) => {
     const getAllReportsByIdSQL = "SELECT * FROM reports WHERE id = ($1)";
     param.pool.query(getAllReportsByIdSQL, [param.id],

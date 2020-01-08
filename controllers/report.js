@@ -76,6 +76,27 @@ exports.delete = (req, res, pool) => {
     );
 }
 
+exports.update = (req, res, pool) => {
+
+    // Validate request
+    if (!req.body) {
+        return res.status(400).send(constants.error.msg_empty_param.message);
+    }
+    report.update(
+        { pool, ...req.body },
+        (reports) => {
+            res.send(constants.success.msg_reg_report);
+        },
+        (err) => {
+            if (err.code == 23505) {
+                res.status(401).send(constants.error.msg_error_duplicate);
+            } else {
+                res.status(400).send(constants.error.msg_error_occured);
+            }
+        }
+    );
+}
+
 exports.getReportById = (req, res, pool) => {
 
     // Validate request
