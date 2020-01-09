@@ -31,9 +31,26 @@ exports.notifyregister = (req, res, pool) => {
         return res.status(400).send(constants.error.msg_empty_param.message);
     }
 
+    req.body.body = "New todo added"
     device.create({ pool, ...req.body },
         (result) => {
             res.send(constants.success.msg_reg_report);
+            device.getAllDeviceTokens({ pool }, (result) => {
+                console.log(result);
+                if (result != undefined) {
+                    result.forEach(element => {
+                        notification.SendNotification(element, req.body,
+                            (resp) => {
+        
+                            },
+                            (error) => {
+        
+                            });
+                    });
+                }
+            }, () => {
+                console.log("errorororo o");
+            })
         },
         (err) => {
             if (err.code == 23505) {
@@ -72,10 +89,27 @@ exports.update = (req, res, pool) => {
     if (!req.body) {
         return res.status(400).send(constants.error.msg_empty_param.message);
     }
+    req.body.body = "Todo Updated"
     report.update(
         { pool, ...req.body },
         (reports) => {
             res.send(constants.success.msg_reg_report);
+            device.getAllDeviceTokens({ pool }, (result) => {
+                console.log(result);
+                if (result != undefined) {
+                    result.forEach(element => {
+                        notification.SendNotification(element, req.body,
+                            (resp) => {
+        
+                            },
+                            (error) => {
+        
+                            });
+                    });
+                }
+            }, () => {
+                console.log("errorororo o");
+            })
         },
         (err) => {
             if (err.code == 23505) {
