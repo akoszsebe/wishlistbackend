@@ -6,11 +6,12 @@ module.exports = {
     deleteDeviceTableSQL: 'DROP table devices',
 
    
-    creatReportsSQL: `CREATE TABLE IF NOT EXISTS reports(
+    creatTodosSQL: `CREATE TABLE IF NOT EXISTS todo(
     id SERIAL PRIMARY KEY,
     title VARCHAR(150),
     content TEXT,
+    category SMALLINT,
     user_id VARCHAR(30))`,
 
-    deleteReportsTableSQL: 'DROP table reports',
+    deleteTodosTableSQL: 'DROP table todo',
 }

@@ -87,6 +87,27 @@ exports.update = (req, res, pool) => {
     );
 }
 
+exports.updateCategory = (req, res, pool) => {
+
+    // Validate request
+    if (!req.body) {
+        return res.status(400).send(constants.error.msg_empty_param.message);
+    }
+    report.updateCategory(
+        { pool, ...req.body },
+        (reports) => {
+            res.send(constants.success.msg_reg_report);
+        },
+        (err) => {
+            if (err.code == 23505) {
+                res.status(401).send(constants.error.msg_error_duplicate);
+            } else {
+                res.status(400).send(constants.error.msg_error_occured);
+            }
+        }
+    );
+}
+
 exports.notify = (req, res, pool) => {
 
     // Validate request

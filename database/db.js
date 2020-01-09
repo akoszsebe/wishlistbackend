@@ -10,7 +10,7 @@ const Db = module.exports = function (_pool) {
 Db.prototype.create = function (callback) {
     console.log("itt")
     const self = this
-    self.createReportTable((success) => {
+    self.createTodoTable((success) => {
         console.log(success);
         if (success) {
             self.createDeviceTable((success) => {
@@ -25,7 +25,7 @@ Db.prototype.create = function (callback) {
 
 Db.prototype.drop = function (__callback) {
     const self = this;
-    self.deleteTable(schemas.deleteReportsTableSQL, (success) => {
+    self.deleteTable(schemas.deleteTodosTableSQL, (success) => {
         if (success) {
             self.deleteTable(schemas.deleteDeviceTableSQL, (success) => {
                 return __callback(success);
@@ -46,10 +46,10 @@ Db.prototype.deleteTable = function (tablename, _callback) {
 }
 
 
-Db.prototype.createReportTable = function (_callback) {
-    console.log("itt reports")
+Db.prototype.createTodoTable = function (_callback) {
+    console.log("itt todos")
     const self = this;
-    self.pool.query(schemas.creatReportsSQL,
+    self.pool.query(schemas.creatTodosSQL,
         (err, data) => {
             if (err) {
                 console.log('Error creating reports tables', err);

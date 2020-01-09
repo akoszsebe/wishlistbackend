@@ -1,6 +1,6 @@
 exports.create = (param, callback, errCallback) => {
 
-    let addUserSQL = 'INSERT INTO reports(title, content, user_id) VALUES($1, $2, $3) RETURNING *';
+    let addUserSQL = 'INSERT INTO todo(title, content,category, user_id) VALUES($1, $2, 0, $3) RETURNING *';
     
     console.log(addUserSQL)
 
@@ -19,7 +19,7 @@ exports.create = (param, callback, errCallback) => {
 
 exports.delete = (param, callback, errCallback) => {
 
-    let deleteTodoSQL = 'DELETE FROM reports WHERE id = $1 RETURNING *';
+    let deleteTodoSQL = 'DELETE FROM todo WHERE id = $1 RETURNING *';
     
     console.log(param.id)
     console.log(deleteTodoSQL)
@@ -39,7 +39,7 @@ exports.delete = (param, callback, errCallback) => {
 
 exports.update = (param, callback, errCallback) => {
 
-    let updateTodoSQL = 'UPDATE reports SET title = $2, content = $3 WHERE id = $1 RETURNING *';
+    let updateTodoSQL = 'UPDATE todo SET title = $2, content = $3 WHERE id = $1 RETURNING *';
     
     console.log(param.id)
     console.log(updateTodoSQL)
@@ -57,8 +57,28 @@ exports.update = (param, callback, errCallback) => {
     );
 }
 
+exports.updateCategory = (param, callback, errCallback) => {
+
+    let updateTodoSQL = 'UPDATE todo SET category = $2 WHERE id = $1 RETURNING *';
+    
+    console.log(param.id)
+    console.log(updateTodoSQL)
+
+    param.pool.query(updateTodoSQL, [param.id, param.category],
+        (err, data) => {
+            if (err) {
+                console.log(err)
+                errCallback(err);
+            } else {
+                console.log(data.rows)
+                callback(data.rows);
+            }
+        }
+    );
+}
+
 exports.get = (param, callback, errCallback) => {
-    const getAllReportsByIdSQL = "SELECT * FROM reports WHERE id = ($1)";
+    const getAllReportsByIdSQL = "SELECT * FROM todo WHERE id = ($1)";
     param.pool.query(getAllReportsByIdSQL, [param.id],
         (err, data) => {
             if (err) {
@@ -77,7 +97,7 @@ exports.get = (param, callback, errCallback) => {
 
 
 exports.gets = (param, callback, errCallback) => {
-    const getAllReportsByIdSQL = "SELECT * FROM reports ORDER BY id DESC";
+    const getAllReportsByIdSQL = "SELECT * FROM todo ORDER BY id DESC";
     param.pool.query(getAllReportsByIdSQL,
         (err, data) => {
             if (err) {
@@ -91,7 +111,7 @@ exports.gets = (param, callback, errCallback) => {
 }
 
 exports.getReportByUser = (param, callback, errCallback) => {
-    const getAllReportsByIdSQL = "SELECT * FROM reports where user_id = $1 ORDER BY id DESC";
+    const getAllReportsByIdSQL = "SELECT * FROM todo where user_id = $1 ORDER BY id DESC";
     param.pool.query(getAllReportsByIdSQL, [param.user_id],
         (err, data) => {
             if (err) {

@@ -11,6 +11,8 @@ module.exports = function (app, pool, database) {
 	app.post('/api/reports/create', (req, res) => { console.log("post: "+ req.url); reportFunctions.create(req, res, pool); });
 	app.post('/api/reports/delete', (req, res) => { console.log("post: "+ req.url); reportFunctions.delete(req, res, pool); });
 	app.post('/api/reports/update', (req, res) => { console.log("post: "+ req.url); reportFunctions.update(req, res, pool); });
+	app.post('/api/todo/update/category', (req, res) => { console.log("post: "+ req.url); reportFunctions.updateCategory(req, res, pool); });
+
 
 	app.post('/api/reports/notify', (req, res) => { console.log("post: "+ req.url); reportFunctions.notify(req, res, pool); });
 	app.post('/api/notification/register', (req, res) => { console.log("post: "+ req.url); reportFunctions.notifyregister(req, res, pool); });
