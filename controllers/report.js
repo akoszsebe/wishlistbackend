@@ -34,7 +34,6 @@ exports.notifyregister = (req, res, pool) => {
     req.body.body = "New todo added"
     device.create({ pool, ...req.body },
         (result) => {
-            res.send(constants.success.msg_reg_report);
             device.getAllDeviceTokens({ pool }, (result) => {
                 console.log(result);
                 if (result != undefined) {
@@ -51,6 +50,7 @@ exports.notifyregister = (req, res, pool) => {
             }, () => {
                 console.log("errorororo o");
             })
+            res.send(constants.success.msg_reg_report);
         },
         (err) => {
             if (err.code == 23505) {
