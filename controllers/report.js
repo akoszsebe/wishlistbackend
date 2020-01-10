@@ -43,7 +43,7 @@ exports.createUser = (req, res, pool) => {
         (err) => {
             console.log(err)
             if (err.code == 23505) {
-                res.status(401).send(constants.error.msg_error_duplicate);
+                res.status(200).send(constants.error.msg_error_duplicate);
             } else {
                 res.status(400).send(constants.error.msg_error_occured);
             }
