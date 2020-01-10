@@ -26,6 +26,20 @@ exports.create = (param, callback, errCallback) => {
     );
 }
 
+exports.delete = (param, callback, errCallback) => {
+    const deleteDeviceSQL = "DELETE FROM devices WHERE token = $1 RETURNING *";
+
+    param.pool.query(deleteDeviceSQL, [param.token],
+        (err, data) => {
+            if (err) {
+                errCallback(err);
+            } else {
+                callback(data.rows);
+            }
+        }
+    );
+}
+
 exports.getDevicesByTopic = (param, callback, errCallback) => {
     const getDevicesByTopicSQL = `SELECT token FROM devices
     INNER JOIN users ON (devices.user_id = users.id) 

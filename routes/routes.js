@@ -15,7 +15,8 @@ module.exports = function (app, pool, database) {
 
 
 	app.post('/api/reports/notify', (req, res) => { console.log("post: "+ req.url); reportFunctions.notify(req, res, pool); });
-	app.post('/api/notification/register', (req, res) => { console.log("post: "+ req.url); reportFunctions.notifyregister(req, res, pool); });
+	app.post('/api/notification/register', (req, res) => { console.log("post: "+ req.url); reportFunctions.notifiregister(req, res, pool); });
+	app.post('/api/notification/unregister', (req, res) => { console.log("post: "+ req.url); reportFunctions.notifiunregister(req, res, pool); });
 
 	/**
 	 * Just for development  
