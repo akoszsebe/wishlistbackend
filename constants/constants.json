@@ -34,7 +34,7 @@
        "msg_del_failure" : {
  
           "code" : 400,
-          "message" : "Unable to remove device"
+          "message" : "Unable to remove"
  
        },
  

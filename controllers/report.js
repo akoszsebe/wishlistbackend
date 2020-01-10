@@ -85,7 +85,10 @@ exports.delete = (req, res, pool) => {
     report.delete(
         { pool, ...req.body },
         (reports) => {
-            req.body.title = reports.title;
+            console.log(reports)
+            if (reports.length  == 0) { res.status(401).send(constants.error.msg_del_failure); return; }
+            req.body.title = reports[0].title;
+            console.log(req.body.title)
             res.send(constants.success.msg_reg_report);
             device.getAllDeviceTokens({ pool }, (result) => {
                 console.log(result);
