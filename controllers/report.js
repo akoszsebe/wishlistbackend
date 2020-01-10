@@ -123,6 +123,8 @@ exports.updateCategory = (req, res, pool) => {
     if (!req.body) {
         return res.status(400).send(constants.error.msg_empty_param.message);
     }
+
+    req.body.body = "Todo Category Updated" 
     report.updateCategory(
         { pool, ...req.body },
         (reports) => {
