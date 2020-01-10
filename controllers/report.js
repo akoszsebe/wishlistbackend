@@ -71,6 +71,8 @@ exports.delete = (req, res, pool) => {
     if (!req.body) {
         return res.status(400).send(constants.error.msg_empty_param.message);
     }
+    console.log(req.headers);
+
     req.body.body = "Todo Deleted";
     report.delete(
         { pool, ...req.body },
@@ -223,7 +225,7 @@ function sendNotification(pool,req) {
     device.getAllDeviceTokens({ pool }, (result) => {
         console.log(result);
         if (result != undefined) {
-            const index = result.indexOf(req.body.device_token);
+            const index = result.indexOf(req.headers.deviceid);
             if (index > -1) {
                 result.splice(index, 1);
             }
