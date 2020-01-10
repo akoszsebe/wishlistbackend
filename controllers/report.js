@@ -15,22 +15,7 @@ exports.create = (req, res, pool) => {
         { pool, ...req.body },
         (reports) => {
             res.send(constants.success.msg_reg_report);
-            device.getAllDeviceTokens({ pool }, (result) => {
-                console.log(result);
-                if (result != undefined) {
-                    result.forEach(element => {
-                        notification.SendNotification(element, req.body,
-                            (resp) => {
-
-                            },
-                            (error) => {
-
-                            });
-                    });
-                }
-            }, () => {
-                console.log("errorororo o");
-            })
+            sendNotification(pool,req);
         },
         (err) => {
             if (err.code == 23505) {
@@ -54,6 +39,11 @@ exports.notifyregister = (req, res, pool) => {
             device.getAllDeviceTokens({ pool }, (result) => {
                 console.log(result);
                 if (result != undefined) {
+                    // const index = result.indexOf(req.body.device_token);
+                    // if (index > -1) {
+                    //     result.splice(index, 1);
+                    // }
+                    console.log(result);
                     result.forEach(element => {
                         notification.SendNotification(element, req.body,
                             (resp) => { },
@@ -86,22 +76,11 @@ exports.delete = (req, res, pool) => {
         { pool, ...req.body },
         (reports) => {
             console.log(reports)
-            if (reports.length  == 0) { res.status(401).send(constants.error.msg_del_failure); return; }
+            if (reports.length == 0) { res.status(401).send(constants.error.msg_del_failure); return; }
             req.body.title = reports[0].title;
             console.log(req.body.title)
             res.send(constants.success.msg_reg_report);
-            device.getAllDeviceTokens({ pool }, (result) => {
-                console.log(result);
-                if (result != undefined) {
-                    result.forEach(element => {
-                        notification.SendNotification(element, req.body,
-                            (resp) => { },
-                            (error) => { });
-                    });
-                }
-            }, () => {
-                console.log("errorororo o");
-            })
+            sendNotification(pool,req);
         },
         (err) => {
             if (err.code == 23505) {
@@ -124,18 +103,7 @@ exports.update = (req, res, pool) => {
         { pool, ...req.body },
         (reports) => {
             res.send(constants.success.msg_reg_report);
-            device.getAllDeviceTokens({ pool }, (result) => {
-                console.log(result);
-                if (result != undefined) {
-                    result.forEach(element => {
-                        notification.SendNotification(element, req.body,
-                            (resp) => { },
-                            (error) => { });
-                    });
-                }
-            }, () => {
-                console.log("errorororo o");
-            })
+            sendNotification(pool,req);
         },
         (err) => {
             if (err.code == 23505) {
@@ -156,7 +124,12 @@ exports.updateCategory = (req, res, pool) => {
     report.updateCategory(
         { pool, ...req.body },
         (reports) => {
+            console.log(reports)
+            if (reports.length == 0) { res.status(401).send(constants.error.msg_del_failure); return; }
+            req.body.title = reports[0].title;
+            console.log(req.body.title)
             res.send(constants.success.msg_reg_report);
+            sendNotification(pool,req);
         },
         (err) => {
             if (err.code == 23505) {
@@ -244,4 +217,24 @@ exports.gets = (req, res, pool) => {
             res.status(400).send(constants.error.msg_error_occured);
         }
     );
+}
+
+function sendNotification(pool,req) {
+    device.getAllDeviceTokens({ pool }, (result) => {
+        console.log(result);
+        if (result != undefined) {
+            const index = result.indexOf(req.body.device_token);
+            if (index > -1) {
+                result.splice(index, 1);
+            }
+            console.log(result);
+            result.forEach(element => {
+                notification.SendNotification(element, req.body,
+                    (resp) => { },
+                    (error) => { });
+            });
+        }
+    }, () => {
+        console.log("errorororo o");
+    })
 }
