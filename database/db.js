@@ -15,7 +15,14 @@ Db.prototype.create = function (callback) {
         if (success) {
             self.createDeviceTable((success) => {
                 console.log(success);
-                return callback(success);
+                if (success){
+                    self.createUserTable((success) => {
+                        console.log(success);
+                        return callback(success);
+                    });
+                } else {
+                    return callback(success);
+                }
             })
         } else {
             return callback(success);
@@ -28,7 +35,13 @@ Db.prototype.drop = function (__callback) {
     self.deleteTable(schemas.deleteTodosTableSQL, (success) => {
         if (success) {
             self.deleteTable(schemas.deleteDeviceTableSQL, (success) => {
-                return __callback(success);
+                if (success) {
+                    self.deleteTable(schemas.deleteUsersTableSQL, (success) => {
+                        return __callback(success);
+                    });
+                } else {
+                    return __callback(success);
+                }
             });
         } else {
             return __callback(success);
@@ -52,7 +65,21 @@ Db.prototype.createTodoTable = function (_callback) {
     self.pool.query(schemas.creatTodosSQL,
         (err, data) => {
             if (err) {
-                console.log('Error creating reports tables', err);
+                console.log('Error creating todo tables', err);
+                return _callback(err)
+            }
+            return _callback(true)
+        }
+    );
+}
+
+Db.prototype.createUserTable = function (_callback) {
+    console.log("itt user")
+    const self = this;
+    self.pool.query(schemas.createUsersTableSQL,
+        (err, data) => {
+            if (err) {
+                console.log('Error creating user tables', err);
                 return _callback(err)
             }
             return _callback(true)
@@ -66,7 +93,7 @@ Db.prototype.createDeviceTable = function (_callback) {
     self.pool.query(schemas.createDevicesTableSQL,
         (err, data) => {
             if (err) {
-                console.log('Error creating reports tables', err);
+                console.log('Error creating device tables', err);
                 return _callback(err)
             }
             return _callback(true)

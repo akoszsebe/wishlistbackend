@@ -1,6 +1,7 @@
 var constants = require('../constants/constants.json');
 const report = require('../models/report.js');
 const device = require('../models/device.js');
+const user = require('../models/user.js');
 const notification = require('../controllers/notification.js')
 
 exports.create = (req, res, pool) => {
@@ -16,6 +17,52 @@ exports.create = (req, res, pool) => {
         (reports) => {
             res.send(constants.success.msg_reg_report);
             sendNotification(pool,req);
+        },
+        (err) => {
+            if (err.code == 23505) {
+                res.status(401).send(constants.error.msg_error_duplicate);
+            } else {
+                res.status(400).send(constants.error.msg_error_occured);
+            }
+        }
+    );
+}
+
+exports.createUser = (req, res, pool) => {
+
+    // Validate request
+
+    if (!req.body) {
+        return res.status(400).send(constants.error.msg_empty_param.message);
+    }
+    user.create(
+        { pool, ...req.body },
+        (reports) => {
+            res.send(constants.success.msg_reg_report);
+        },
+        (err) => {
+            console.log(err)
+            if (err.code == 23505) {
+                res.status(401).send(constants.error.msg_error_duplicate);
+            } else {
+                res.status(400).send(constants.error.msg_error_occured);
+            }
+        }
+    );
+}
+
+
+exports.removeUser = (req, res, pool) => {
+
+    // Validate request
+
+    if (!req.body) {
+        return res.status(400).send(constants.error.msg_empty_param.message);
+    }
+    user.delete(
+        { pool, ...req.body },
+        (reports) => {
+            res.send(constants.success.msg_reg_report);
         },
         (err) => {
             if (err.code == 23505) {

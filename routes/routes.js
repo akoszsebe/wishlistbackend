@@ -18,6 +18,8 @@ module.exports = function (app, pool, database) {
 	app.post('/api/notification/register', (req, res) => { console.log("post: "+ req.url); reportFunctions.notifiregister(req, res, pool); });
 	app.post('/api/notification/unregister', (req, res) => { console.log("post: "+ req.url); reportFunctions.notifiunregister(req, res, pool); });
 
+	app.post('/api/user/create', (req, res) => { console.log("post: "+ req.url); reportFunctions.createUser(req, res, pool); });
+	app.post('/api/user/delete', (req, res) => { console.log("post: "+ req.url); reportFunctions.removeUser(req, res, pool); });
 	/**
 	 * Just for development  
 	 * Drop tables and Create 
