@@ -14,6 +14,11 @@ exports.SendNotification = (registrationToken, param, callback, callbackError) =
             body: param.body,
             click_action: 'FLUTTER_NOTIFICATION_CLICK'
         },
+        data: {
+            title: param.title,
+            body: param.body,
+            click_action: 'FLUTTER_NOTIFICATION_CLICK'
+        }
     };
     var options = {
         priority: "normal",
