@@ -11,13 +11,15 @@ exports.SendNotification = (registrationToken, param, callback, callbackError) =
     let payload = {
         notification: {
             title: param.title,
-            body: param.body
+            body: param.body,
+            click_action: 'FLUTTER_NOTIFICATION_CLICK'
         },
     };
     var options = {
         priority: "normal",
         timeToLive: 60 * 60
     };
+
 
     admin.messaging().sendToDevice(registrationToken, payload, options)
         .then(function (response) {
