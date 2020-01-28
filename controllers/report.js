@@ -156,7 +156,7 @@ exports.update = (req, res, pool) => {
         { pool, ...req.body },
         (reports) => {
             res.send(constants.success.msg_reg_report);
-            sendNotification(pool,req);
+            //sendNotification(pool,req);
         },
         (err) => {
             if (err.code == 23505) {

@@ -39,7 +39,7 @@ exports.delete = (param, callback, errCallback) => {
 
 exports.update = (param, callback, errCallback) => {
 
-    let updateTodoSQL = 'UPDATE todo SET title = $2, content = $3 category = $4 WHERE id = $1 RETURNING *';
+    let updateTodoSQL = 'UPDATE todo SET title = $2, content = $3, category = $4 WHERE id = $1 RETURNING *';
     
     console.log(param.id)
     console.log(updateTodoSQL)
