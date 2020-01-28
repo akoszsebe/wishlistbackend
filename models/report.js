@@ -1,10 +1,10 @@
 exports.create = (param, callback, errCallback) => {
 
-    let addUserSQL = 'INSERT INTO todo(title, content,category, user_id) VALUES($1, $2, 0, $3) RETURNING *';
-    
+    let addUserSQL = 'INSERT INTO todo(title, content,category, user_id) VALUES($1, $2, $4, $3) RETURNING *';
+
     console.log(addUserSQL)
 
-    param.pool.query(addUserSQL, [param.title, param.content,param.user_id ],
+    param.pool.query(addUserSQL, [param.title, param.content, param.user_id, param.category],
         (err, data) => {
             if (err) {
                 console.log(err)
@@ -20,11 +20,11 @@ exports.create = (param, callback, errCallback) => {
 exports.delete = (param, callback, errCallback) => {
 
     let deleteTodoSQL = 'DELETE FROM todo WHERE id = $1 RETURNING *';
-    
+
     console.log(param.id)
     console.log(deleteTodoSQL)
 
-    param.pool.query(deleteTodoSQL, [param.id ],
+    param.pool.query(deleteTodoSQL, [param.id],
         (err, data) => {
             if (err) {
                 console.log(err)
@@ -40,7 +40,7 @@ exports.delete = (param, callback, errCallback) => {
 exports.update = (param, callback, errCallback) => {
 
     let updateTodoSQL = 'UPDATE todo SET title = $2, content = $3, category = $4 WHERE id = $1 RETURNING *';
-    
+
     console.log(param.id)
     console.log(updateTodoSQL)
 
@@ -60,7 +60,7 @@ exports.update = (param, callback, errCallback) => {
 exports.updateCategory = (param, callback, errCallback) => {
 
     let updateTodoSQL = 'UPDATE todo SET category = $2 WHERE id = $1 RETURNING *';
-    
+
     console.log(param.id)
     console.log(updateTodoSQL)
 
