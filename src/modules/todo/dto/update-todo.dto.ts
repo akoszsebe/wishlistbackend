@@ -1,18 +1,20 @@
 import {ApiProperty} from "@nestjs/swagger";
 
-export class CreateUserDto {
+export class UpdateTodoDto {
 
 
   @ApiProperty({
     required: true,
-
+    type: String,
   })
-  user_id: string;
+  title: string;
 
   @ApiProperty({required: true})
-  displayName: string;
+  content: string;
 
   @ApiProperty({required: true})
-  photoUrl: string;
+  category: number;
 
+  @ApiProperty({required: true})
+  archived: boolean;
 }

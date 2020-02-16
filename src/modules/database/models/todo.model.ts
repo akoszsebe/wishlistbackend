@@ -6,9 +6,10 @@ import {
   CreatedAt,
   UpdatedAt,
   DeletedAt,
-  BelongsToMany, BelongsTo
+  BelongsToMany
 } from 'sequelize-typescript';
 import {User} from './user.model';
+import {UserTodo} from "./user-todo.model";
 
 @Table({tableName: 'users'})
 export class Todo extends Model<Todo> {
@@ -54,9 +55,9 @@ export class Todo extends Model<Todo> {
   @Column({field: 'deleted_at'})
   deletedAt: Date;
 
-  @BelongsTo(() => User)
-  owner: User;
+  @Column({allowNull: false, type: DataType.UUID})
+  ownerId: string;
 
-  @BelongsToMany(() => User, 'id')
+  @BelongsToMany(() => User, () => UserTodo)
   users: User[];
 }

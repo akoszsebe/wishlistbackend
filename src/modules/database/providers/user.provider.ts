@@ -2,7 +2,7 @@ import { User} from '../models/user.model';
 
 export const usersProviders = [
   {
-    provide: 'USER_REPOSITORY',
+    provide: 'USERS_REPOSITORY',
     useValue: User,
   },
 ];

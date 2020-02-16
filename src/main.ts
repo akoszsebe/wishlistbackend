@@ -1,4 +1,3 @@
-import env from 'dotenv';
 import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
@@ -8,7 +7,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  env.config();
+  require('dotenv').config();
   const app = await NestFactory.create<NestFastifyApplication>(
       AppModule,
       new FastifyAdapter()
@@ -16,7 +15,7 @@ async function bootstrap() {
 
   const options = new DocumentBuilder()
       .setTitle('WishList')
-      .setDescription('The cats API description')
+      .setDescription('The WishList API description')
       .setVersion('0.0.1')
       .addTag('wishlist')
       .build();

@@ -1,6 +1,18 @@
-import {Table, Column, Model, DataType, HasMany, CreatedAt, UpdatedAt, DeletedAt, IsEmail} from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  HasMany,
+  CreatedAt,
+  UpdatedAt,
+  DeletedAt,
+  IsEmail,
+  BelongsToMany
+} from 'sequelize-typescript';
 import {Device} from './device.model';
 import {Todo} from './todo.model';
+import {UserTodo} from "./user-todo.model";
 
 @Table({tableName: 'users'})
 export class User extends Model<User> {
@@ -43,6 +55,6 @@ export class User extends Model<User> {
   @HasMany(() => Device)
   devices: Device[];
 
-  @HasMany(() => Todo)
+  @BelongsToMany(() => Todo, () => UserTodo)
   todos: Todo[];
 }

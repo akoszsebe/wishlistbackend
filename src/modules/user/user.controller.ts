@@ -1,20 +1,19 @@
 import {Body, Controller, Delete, Param, Post} from '@nestjs/common';
 import { UserService } from './user.service';
-import {CreateUser} from "./dto/create-user.dto";
-import {User} from "../database/models/user.model";
+import {CreateUserDto} from "./dto/create-user.dto";
 
 
-@Controller('/user')
+@Controller('/users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  createUser(@Body() user: CreateUser): Promise<User> {
+  createUser(@Body() user: CreateUserDto): Promise<any> {
     return this.userService.createUser(user);
   }
 
   @Delete()
-  deleteUser(@Param() userId: number): Promise<string> {
+  deleteUser(@Param() userId: string): Promise<string> {
     return this.userService.removeUser(userId);
   }
 }

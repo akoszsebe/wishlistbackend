@@ -5,5 +5,6 @@ import {DatabaseModule} from '../database/database.module';
 @Module({
   imports: [DatabaseModule],
   providers: [NotificationService],
+  exports: [NotificationService]
 })
 export class SharedModule {}
